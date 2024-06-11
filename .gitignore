@@ -4,11 +4,11 @@ __pycache__
 *.egg-info
 */build/*
 */dist/*
+ruff_cache/
 
 
 # misc
 .coverage
-.vscode
 coverage.xml
 
 

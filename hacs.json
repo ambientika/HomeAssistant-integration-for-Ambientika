@@ -1,8 +1,8 @@
 {
-    "name": "Integration blueprint",
-    "filename": "integration_blueprint.zip",
-    "hide_default_branch": true,
-    "homeassistant": "2023.8.0",
-    "render_readme": true,
-    "zip_release": true
+  "name": "HomeAssistant integration for Ambientika",
+  "filename": "integration_ambientika.zip",
+  "hide_default_branch": true,
+  "homeassistant": "2024.5.2",
+  "render_readme": true,
+  "zip_release": true
 }
