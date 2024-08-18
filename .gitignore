@@ -5,6 +5,7 @@ __pycache__
 */build/*
 */dist/*
 ruff_cache/
+.ruff_cache
 
 
 # misc
