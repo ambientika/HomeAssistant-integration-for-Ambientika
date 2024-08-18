@@ -28,18 +28,6 @@ class AmbientikaApiClient:
         self._password = password
         self._host = DEFAULT_HOST
 
-    # @staticmethod
-    # async def test_credentials(username: str, password: str) -> bool | None:
-    #     """Validate credentials."""
-    #     LOGGER.debug("Authenticating with Ambientika API.")
-    #     api_client = await authenticate(username, password, DEFAULT_HOST)
-
-    #     LOGGER.debug(api_client)
-    #     if Failure(api_client):
-    #         raise AmbientikaApiClientAuthenticationError("Invalid credentials")
-    #     return True
-
-    # async def async_get_data(self) -> list[dict[Device, DeviceStatus]]:
     async def async_get_data(self) -> list:
         """Get all devices from the API.
 
@@ -54,7 +42,7 @@ class AmbientikaApiClient:
             api_client = authenticator.unwrap()
         except UnwrapFailedError as exception:
             raise AmbientikaApiClientAuthenticationError(
-                "Invalid credentials"
+                "Server can't be reached or Invalid credentials"
             ) from exception  # no idea if the UnwrapFilaedError should be used here.
 
         LOGGER.debug("fetching houses.")
@@ -63,8 +51,8 @@ class AmbientikaApiClient:
             raise AmbientikaApiClientError("Ambientika does not have houses set up")
 
         try:
-            LOGGER.debug("success.")
             # TODO: write tests
+            LOGGER.debug("fetching devices.")
             devices = [
                 device
                 for house in houses.unwrap()
@@ -75,22 +63,5 @@ class AmbientikaApiClient:
             raise AmbientikaApiClientError("Could not fetch devices") from exception
         except Exception as exception:
             raise AmbientikaApiClientError("Unknown error") from exception
-
-        # TODO: this part adds the status to the device. I don't know how to expose this yet.
-        # devices = []
-        # for device in devices:
-        #     try:
-        #         LOGGER.debug("fetching device status.")
-        #         device_status = await device.status()
-        #         devices.append(
-        #             {"device_info": device, "device_state": device_status.unwrap()}
-        #         )
-        #     except UnwrapFailedError as _exception:
-        #         LOGGER.error(
-        #             "Could not fetch device status: %s", device_status.failure()
-        #         )
-
-        LOGGER.debug("success.")
-        LOGGER.warning(devices)
 
         return devices
