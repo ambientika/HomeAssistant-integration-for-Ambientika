@@ -3,6 +3,10 @@
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "postCreateCommand": "scripts/setup",
   "forwardPorts": [8123],
+  "features": {
+    // "ghcr.io/schlich/devcontainer-features/powerlevel10k:1": {},
+    "ghcr.io/m4tchl0ck/devcontainer-features/powerlevel10k:1": {}
+  },
   "portsAttributes": {
     "8123": {
       "label": "Home Assistant",
@@ -23,19 +27,20 @@
       ],
       "settings": {
         "python.analysis.autoImportCompletions": true,
-        "python.analysis.autoSearchPaths": false,
         "python.analysis.extraPaths": ["/home/vscode/.local/lib/python*/"],
         "python.analysis.typeCheckingMode": "basic",
         "python.defaultInterpreterPath": "/usr/local/bin/python",
         "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
         "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
         "python.formatting.provider": "black",
-        "python.pythonPath": "/usr/bin/python3",
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.profiles.linux": {
           "zsh": {
             "path": "/usr/bin/zsh"
           }
+        },
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
         }
       }
     }

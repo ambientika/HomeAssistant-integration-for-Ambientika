@@ -6,9 +6,6 @@
   "documentation": "https://github.com/lipkau/HomeAssistant-integration-for-Ambientika",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/lipkau/HomeAssistant-integration-for-Ambientika/issues",
-  "requirements": [
-    "ambientika_py==0.0.4",
-    "returns==0.22.0"
-  ],
+  "requirements": ["ambientika_py==0.0.4", "returns==0.23.0"],
   "version": "0.0.1"
 }

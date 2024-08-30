@@ -1,4 +1,9 @@
-"""A demonstration 'hub' that connects several devices."""
+"""A demonstration 'hub' that connects several devices.
+
+References:
+ - https://developers.home-assistant.io/docs/integration_fetching_data/#coordinated-single-api-poll-for-data-for-all-entities
+
+"""
 
 from __future__ import annotations
 
@@ -11,7 +16,6 @@ from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
 
-# from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import UpdateFailed, DataUpdateCoordinator
 
 from .api import (
@@ -28,15 +32,14 @@ class AmbientikaHub(DataUpdateCoordinator):
     config_entry: ConfigEntry
 
     def __init__(self, hass: HomeAssistant, config: Mapping[str, Any]) -> None:
-        """Init dummy hub."""
+        """Initialize the hub between all devices and the API facade."""
         self._hass_config = hass
         self._hass = hass
-        self.devices = []
-
         self._credentials = {
             "username": config.get(CONF_USERNAME, ""),
             "password": config.get(CONF_PASSWORD, ""),
         }
+        self.devices = []
 
         super().__init__(
             hass=hass,
@@ -53,23 +56,6 @@ class AmbientikaHub(DataUpdateCoordinator):
             password=self._credentials["password"],
         )
         self.devices = await self.client.async_get_data()
-
-    # def register_platform_add_entities(
-    #     self,
-    #     _entry: ConfigEntry,
-    #     async_add_entities: AddEntitiesCallback,
-    # ) -> None:
-    #     """Create entities from descriptions and add them."""
-
-    #     # TODO: Implement this method
-    #     # new_entites: list[AmbientikaFan] = []
-
-    #     # for device in self._devices:
-    #     #     for description in descriptions:
-    #     #         if capability := description.capability_fn(device.capabilities):
-    #     #             new_entites.append(entity_class(device, capability, description))
-
-    #     async_add_entities((AmbientikaFan(device) for device in self._devices), True)
 
     async def _async_update_data(self):
         """Update data via library."""
