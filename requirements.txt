@@ -1,6 +1,7 @@
 colorlog==6.8.2
 homeassistant==2024.5.2
-pip>=24.1.2,<24.2
+
+pip>=24.1.2,<24.3
 ruff==0.6.2
 
 ambientika_py==0.0.4
