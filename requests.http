@@ -1,0 +1,33 @@
+# Ambientika's API documentation:
+# https://app.ambientika.eu:4521/swagger/index.html
+
+@server = https://app.ambientika.eu:4521
+@username = john.doe@mail.me
+@password = my-Password
+
+###
+# @name authenticate
+POST {{server}}/Users/authenticate
+Content-Type: application/json
+
+{ "username": "{{username}}", "password": "{{password}}" }
+
+###
+# @name allHouses
+GET {{server}}/House/houses
+Authorization: Bearer {{authenticate.response.body.jwtToken}}
+
+###
+# @name allHouseDevices
+GET {{server}}/House/house-devices?houseId={{allHouses.response.body.0.id}}
+Authorization: Bearer {{authenticate.response.body.jwtToken}}
+
+###
+# @name deviceStatus
+GET {{server}}/Device/device-status?deviceSerialNumber={{allHouseDevices.response.body.0.serialNumber}}
+Authorization: Bearer {{authenticate.response.body.jwtToken}}
+
+###
+# @name resetFilter
+GET {{server}}/Device/reset-filter?deviceSerialNumber={{allHouseDevices.response.body.0.serialNumber}}
+Authorization: Bearer {{authenticate.response.body.jwtToken}}

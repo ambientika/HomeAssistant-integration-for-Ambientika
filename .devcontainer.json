@@ -23,7 +23,8 @@
         "microsoft.vscode-pylint",
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "ryanluker.vscode-coverage-gutters"
+        "ryanluker.vscode-coverage-gutters",
+        "humao.rest-client"
       ],
       "settings": {
         "python.analysis.autoImportCompletions": true,
