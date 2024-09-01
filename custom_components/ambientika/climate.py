@@ -194,6 +194,9 @@ class AmbientikaFan(ClimateEntity):
 
     async def async_update(self) -> None:
         """Fetch new state data for this device."""
+        LOGGER.debug(
+            "Updating climate entity for device %s", self._device.serial_number
+        )
         status = await self._device.status()
         match status:
             case Success(data):

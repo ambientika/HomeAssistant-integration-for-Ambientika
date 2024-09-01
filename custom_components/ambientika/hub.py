@@ -18,6 +18,7 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 
 from homeassistant.helpers.update_coordinator import UpdateFailed, DataUpdateCoordinator
 
+
 from .api import (
     AmbientikaApiClient,
     AmbientikaApiClientAuthenticationError,
@@ -32,7 +33,7 @@ class AmbientikaHub(DataUpdateCoordinator):
     config_entry: ConfigEntry
 
     def __init__(self, hass: HomeAssistant, config: Mapping[str, Any]) -> None:
-        """Initialize the hub between all devices and the API facade."""
+        """Initialize the hub to manage all devices and the API facade."""
         self._hass_config = hass
         self._hass = hass
         self._credentials = {
@@ -60,6 +61,7 @@ class AmbientikaHub(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Update data via library."""
         try:
+            LOGGER.debug("HUB: Fetching data from Ambientika API.")
             return await self.client.async_get_data()
         except AmbientikaApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception

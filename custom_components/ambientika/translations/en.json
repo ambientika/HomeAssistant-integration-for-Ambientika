@@ -14,5 +14,27 @@
       "connection": "Unable to connect to the server.",
       "unknown": "Unknown error occurred."
     }
+  },
+  "entity": {
+    "sensor": {
+      "air_quality": {
+        "name": "Air Quality",
+        "state": {
+          "VeryGood": "Very Good",
+          "Good": "Good",
+          "Medium": "Medium",
+          "Poor": "Poor",
+          "Bad": "Bad"
+        }
+      },
+      "filter_status": {
+        "name": "Filter Status",
+        "state": {
+          "Bad": "Bad",
+          "Medium": "Medium",
+          "Good": "Good"
+        }
+      }
+    }
   }
 }

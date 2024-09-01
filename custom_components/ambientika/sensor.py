@@ -8,7 +8,6 @@ References:
 """
 
 from __future__ import annotations
-from abc import abstractmethod
 
 from ambientika_py import DeviceStatus
 from returns.result import Failure, Success
@@ -18,7 +17,7 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, LOGGER
+from .const import DOMAIN, LOGGER, AirQuality, FilterStatus
 from .hub import AmbientikaHub
 
 
@@ -62,24 +61,10 @@ class SensorBase(Entity):
         """Return False if we can't resolve the device's status."""
         return self._status is not None
 
-    @property
-    @abstractmethod
-    def _attr_key(self) -> str:
-        """Force the implementation of this property in the child class."""
-        pass
-
-    @property
-    def state(self):
-        """Generic imeplentation to return the state of the sensor.
-
-        This requires `_attr_key` to be implemented in the child class.
-        """
-        if self._status:
-            return self._status[self._attr_key]
-
     # TODO: move this to a common base class shared with climate.py
     async def async_update(self) -> None:
         """Fetch new state data for this device."""
+        LOGGER.debug("Updating sensor entity for device %s", self._device.serial_number)
         status = await self._device.status()
         match status:
             case Success(data):
@@ -94,28 +79,38 @@ class SensorBase(Entity):
 
 
 class AirQualitySensor(SensorBase):
-    """Sensor representation."""
+    """Sensor for the Air Quality status."""
 
-    _attr_key = "air_quality"  # type: ignore
+    _attr_has_entity_name = True
+    _attr_translation_key = "air_quality"
+    _attr_icon = "mdi:air-purifier"
 
     def __init__(self, device):
         """Initialize the sensor."""
         super().__init__(device)
-
         self._attr_unique_id = f"{self._device.name}_air_quality"
-        self._attr_name = f"{self._device.name} Air Quality"
-        self._attr_icon = "mdi:air-purifier"
+
+    @property
+    def state(self):
+        """State of the sensor."""
+        if self._status:
+            return AirQuality[self._status["air_quality"]]
 
 
 class FilterStatusSensor(SensorBase):
-    """Sensor representation."""
+    """Sensor for the Filter Status."""
 
-    _attr_key = "filters_status"  # type: ignore
+    _attr_has_entity_name = True
+    _attr_translation_key = "filter_status"
+    _attr_icon = "mdi:air-filter"
 
     def __init__(self, device):
         """Initialize the sensor."""
         super().__init__(device)
-
         self._attr_unique_id = f"{self._device.name}_filter_status"
-        self._attr_name = f"{self._device.name} Filter Status"
-        self._attr_icon = "mdi:air-filter"
+
+    @property
+    def state(self):
+        """State of the sensor."""
+        if self._status:
+            return FilterStatus[self._status["filters_status"]]
