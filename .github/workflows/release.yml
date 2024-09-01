@@ -14,8 +14,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: "Checkout the repository"
-        uses: "actions/checkout@v4"
+      - uses: "actions/checkout@v4"
 
       - name: "ZIP the integration directory"
         shell: "bash"
@@ -24,6 +23,6 @@ jobs:
           zip integration_ambientika.zip -r ./
 
       - name: "Upload the ZIP file to the release"
-        uses: "softprops/action-gh-release@v2.0.8"
+        uses: "softprops/action-gh-release@v2"
         with:
           files: ${{ github.workspace }}/custom_components/integration_ambientika/integration_ambientika.zip
