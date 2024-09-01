@@ -26,7 +26,7 @@ async def async_setup_entry(
     async_add_entities(NightAlarmBinarySensor(device) for device in hub.devices)
 
 
-class AlarmSensorBase(BinarySensorEntity):
+class BinarySensorBase(BinarySensorEntity):
     """Base representation of an Ambientika Sensor."""
 
     # TODO:
@@ -68,7 +68,7 @@ class AlarmSensorBase(BinarySensorEntity):
                 self._status = None
 
 
-class HumidityAlarmBinarySensor(AlarmSensorBase):
+class HumidityAlarmBinarySensor(BinarySensorBase):
     """Humidity Alarm Binary Sensor."""
 
     _attr_has_entity_name = True
@@ -78,8 +78,8 @@ class HumidityAlarmBinarySensor(AlarmSensorBase):
     def __init__(self, device) -> None:
         """Initialize the sensor."""
         super().__init__(device)
-        # self._attr_unique_id = f"{self._device.name}_humidity_alarm"
-        LOGGER.debug(f"Creating AmbientikaBinarySensor: {self._attr_name}")
+        self._attr_unique_id = f"{self._device.name}_humidity_alarm"
+        LOGGER.debug(f"Creating AmbientikaBinarySensor: {self._device.name}")
 
     @property
     def is_on(self) -> bool | None:
@@ -88,7 +88,7 @@ class HumidityAlarmBinarySensor(AlarmSensorBase):
             return self._status["humidity_alarm"] is True
 
 
-class NightAlarmBinarySensor(AlarmSensorBase):
+class NightAlarmBinarySensor(BinarySensorBase):
     """Humidity Alarm Binary Sensor."""
 
     _attr_has_entity_name = True
@@ -98,8 +98,8 @@ class NightAlarmBinarySensor(AlarmSensorBase):
     def __init__(self, device) -> None:
         """Initialize the sensor."""
         super().__init__(device)
-        # self._attr_unique_id = f"{self._device.name}_night_alarm"
-        LOGGER.debug(f"Creating AmbientikaBinarySensor: {self._attr_name}")
+        self._attr_unique_id = f"{self._device.name}_night_alarm"
+        LOGGER.debug(f"Creating AmbientikaBinarySensor: {self._device.name}")
 
     @property
     def is_on(self) -> bool | None:
