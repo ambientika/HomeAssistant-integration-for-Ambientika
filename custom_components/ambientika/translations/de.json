@@ -11,7 +11,7 @@
     },
     "error": {
       "auth": "Benutzername/Passwort falsch.",
-      "connection": "Keine Verbindung zum Serverr",
+      "connection": "Keine Verbindung zum Server",
       "unknown": "Unbekannter Fehler"
     }
   },
