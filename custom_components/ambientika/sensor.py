@@ -16,6 +16,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.components.sensor.const import SensorDeviceClass
 
 from .const import DOMAIN, LOGGER, AirQuality, FilterStatus
 from .hub import AmbientikaHub
@@ -29,6 +30,8 @@ async def async_setup_entry(
 
     # TODO: this could be simplified with ENTITY_DESCTIPTIONS, but requires event subscription
     # https://github.com/DeebotUniverse/Deebot-4-Home-Assistant/blob/dev/custom_components/deebot/sensor.py#L79
+    async_add_entities((TemperatureSensor(device) for device in hub.devices), True)
+    async_add_entities((HumiditySensor(device) for device in hub.devices), True)
     async_add_entities((AirQualitySensor(device) for device in hub.devices), True)
     async_add_entities((FilterStatusSensor(device) for device in hub.devices), True)
 
@@ -78,6 +81,48 @@ class SensorBase(Entity):
                 self._status = None
 
 
+class TemperatureSensor(SensorBase):
+    """Sensor for the Air Quality status."""
+
+    _attr_has_entity_name = True
+    _attr_translation_key = "temperature"
+    # _attr_icon = "mdi:thermometer"
+    _attr_device_class = SensorDeviceClass.TEMPERATURE
+    _attr_unit_of_measurement = "°C"
+
+    def __init__(self, device):
+        """Initialize the sensor."""
+        super().__init__(device)
+        self._attr_unique_id = f"{self._device.name}_temperature"
+
+    @property
+    def state(self):
+        """State of the sensor."""
+        if self._status:
+            return self._status["temperature"]
+
+
+class HumiditySensor(SensorBase):
+    """Sensor for the Air Quality status."""
+
+    _attr_has_entity_name = True
+    _attr_translation_key = "humidity"
+    # _attr_icon = "mdi:air-purifier"
+    _attr_device_class = SensorDeviceClass.HUMIDITY
+    _attr_unit_of_measurement = "%"
+
+    def __init__(self, device):
+        """Initialize the sensor."""
+        super().__init__(device)
+        self._attr_unique_id = f"{self._device.name}_humidity"
+
+    @property
+    def state(self):
+        """State of the sensor."""
+        if self._status:
+            return self._status["humidity"]
+
+
 class AirQualitySensor(SensorBase):
     """Sensor for the Air Quality status."""
 
@@ -103,6 +148,7 @@ class FilterStatusSensor(SensorBase):
     _attr_has_entity_name = True
     _attr_translation_key = "filter_status"
     _attr_icon = "mdi:air-filter"
+    _attr_device_class = SensorDeviceClass.ENUM
 
     def __init__(self, device):
         """Initialize the sensor."""
@@ -114,3 +160,8 @@ class FilterStatusSensor(SensorBase):
         """State of the sensor."""
         if self._status:
             return FilterStatus[self._status["filters_status"]]
+
+    @property
+    def options(self):
+        """Return the list of available options."""
+        return list(FilterStatus)
