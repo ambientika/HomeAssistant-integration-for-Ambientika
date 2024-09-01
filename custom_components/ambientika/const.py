@@ -15,16 +15,16 @@ DEFAULT_HOST = "https://app.ambientika.eu:4521"  # This is the default from ambi
 class FilterStatus(StrEnum):
     """The filter status of the device."""
 
-    Bad = "Bad"
-    Medium = "Medium"
-    Good = "Good"
+    Bad = "bad"
+    Medium = "medium"
+    Good = "good"
 
 
 class AirQuality(StrEnum):
     """The air quality of the device."""
 
-    VeryGood = "VeryGood"
-    Good = "Good"
-    Medium = "Medium"
-    Poor = "Poor"
-    Bad = "Bad"
+    VeryGood = "very_good"
+    Good = "good"
+    Medium = "medium"
+    Poor = "poor"
+    Bad = "bad"

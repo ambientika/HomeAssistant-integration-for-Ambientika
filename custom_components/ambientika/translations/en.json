@@ -28,19 +28,19 @@
       "air_quality": {
         "name": "Air Quality",
         "state": {
-          "VeryGood": "Very Good",
-          "Good": "Good",
-          "Medium": "Medium",
-          "Poor": "Poor",
-          "Bad": "Bad"
+          "very_good": "Very Good",
+          "good": "Good",
+          "medium": "Medium",
+          "poor": "Poor",
+          "bad": "Bad"
         }
       },
       "filter_status": {
         "name": "Filter Status",
         "state": {
-          "Bad": "Bad",
-          "Medium": "Medium",
-          "Good": "Good"
+          "bad": "Bad",
+          "medium": "Medium",
+          "good": "Good"
         }
       }
     }
