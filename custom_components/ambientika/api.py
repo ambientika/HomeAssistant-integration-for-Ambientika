@@ -1,14 +1,16 @@
 """API Client.
 
 This uses https://pypi.org/project/ambientika/ as a facade.
+Ambientika API: https://app.ambientika.eu:4521/swagger/index.html.
 """
 
 from returns.result import Failure
 from returns.primitives.exceptions import UnwrapFailedError
 
-from custom_components.ambientika.const import DEFAULT_HOST, LOGGER
 
-from ambientika_py import authenticate
+from ambientika_py import authenticate, Device
+
+from .const import DEFAULT_HOST, LOGGER
 
 
 class AmbientikaApiClientError(Exception):
@@ -28,7 +30,7 @@ class AmbientikaApiClient:
         self._password = password
         self._host = DEFAULT_HOST
 
-    async def async_get_data(self) -> list:
+    async def async_get_data(self) -> list[Device]:
         """Get all devices from the API.
 
         The devices are flattend. Meaning, the information about rooms and houses is not made available to hass.
@@ -53,7 +55,8 @@ class AmbientikaApiClient:
         try:
             # TODO: write tests
             LOGGER.debug("fetching devices.")
-            devices = [
+            return [
+                # AmbientikaEntity(device)
                 device
                 for house in houses.unwrap()
                 for room in house.rooms
@@ -63,5 +66,3 @@ class AmbientikaApiClient:
             raise AmbientikaApiClientError("Could not fetch devices") from exception
         except Exception as exception:
             raise AmbientikaApiClientError("Unknown error") from exception
-
-        return devices

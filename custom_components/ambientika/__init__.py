@@ -4,12 +4,6 @@ For more details about this integration, please refer to
 https://github.com/lipkau/HomeAssistant-integration-for-Ambientika
 """
 
-# TODO:
-# - [ ] add support for binary sensors
-# - [ ] translate strings
-# - [] fix bug:
-#      > [homeassistant.components.climate] Entity None (<class 'custom_components.ambientika.climate.AmbientikaFan'>) implements HVACMode(s): off, fan_only and therefore implicitly supports the turn_on/turn_off methods without setting the proper ClimateEntityFeature. Please create a bug report at https://github.com/lipkau/HomeAssistant-integration-for-Ambientika/issues
-
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
@@ -21,7 +15,7 @@ from .hub import AmbientikaHub
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
-    # Platform.BINARY_SENSOR,
+    Platform.BINARY_SENSOR,
     # Platform.SWITCH,
     Platform.CLIMATE,
 ]

@@ -16,6 +16,14 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "night_alarm": {
+        "name": "Night Alarm"
+      },
+      "humidity_alarm": {
+        "name": "Humidity Alarm"
+      }
+    },
     "sensor": {
       "air_quality": {
         "name": "Air Quality",
