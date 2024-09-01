@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Wenn du Hilfe bei der Konfiguration benötigst schaue auf: https://github.com/lipkau/HomeAssistant-integration-for-Ambientika",
+        "data": {
+          "username": "Benutzername",
+          "password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "auth": "Benutzername/Passwort falsch.",
+      "connection": "Keine Verbindung zum Serverr",
+      "unknown": "Unbekannter Fehler"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "night_alarm": {
+        "name": "Nacht Alarm"
+      },
+      "humidity_alarm": {
+        "name": "Luftfeuchte Alarm"
+      }
+    },
+    "sensor": {
+      "air_quality": {
+        "name": "Luftqualität",
+        "state": {
+          "very_good": "sehr gut",
+          "good": "gut",
+          "medium": "mittel",
+          "poor": "schlecht",
+          "bad": "sehr schlecht"
+        }
+      },
+      "filter_status": {
+        "name": "Filter Status",
+        "state": {
+          "bad": "schlecht",
+          "medium": "mittel",
+          "good": "gut"
+        }
+      }
+    }
+  }
+}
