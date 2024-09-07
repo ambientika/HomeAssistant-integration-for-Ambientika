@@ -17,8 +17,8 @@ from homeassistant.util.percentage import (
 
 from returns.result import Failure, Success
 
-from .const import DOMAIN, LOGGER, ORDERED_NAMED_FAN_SPEEDS
-from .hub import AmbientikaHub
+from ..const import DOMAIN, LOGGER, ORDERED_NAMED_FAN_SPEEDS
+from ..hub import AmbientikaHub
 
 
 async def async_setup_entry(
@@ -26,7 +26,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Create the `climate` entities for each device."""
+    """Create the `fan` entities for each device."""
     hub: AmbientikaHub = _hass.data[DOMAIN][entry.entry_id]
 
     # TODO: should we not mount the slave devices?

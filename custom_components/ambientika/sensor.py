@@ -30,8 +30,8 @@ async def async_setup_entry(
 
     # TODO: this could be simplified with ENTITY_DESCTIPTIONS, but requires event subscription
     # https://github.com/DeebotUniverse/Deebot-4-Home-Assistant/blob/dev/custom_components/deebot/sensor.py#L79
-    async_add_entities((TemperatureSensor(device) for device in hub.devices), True)
-    async_add_entities((HumiditySensor(device) for device in hub.devices), True)
+    # async_add_entities((TemperatureSensor(device) for device in hub.devices), True)
+    # async_add_entities((HumiditySensor(device) for device in hub.devices), True)
     async_add_entities((AirQualitySensor(device) for device in hub.devices), True)
     async_add_entities((FilterStatusSensor(device) for device in hub.devices), True)
 
@@ -164,4 +164,4 @@ class FilterStatusSensor(SensorBase):
     @property
     def options(self):
         """Return the list of available options."""
-        return list(FilterStatus)
+        return [name for name, _ in FilterStatus.__members__.items()]
