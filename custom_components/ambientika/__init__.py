@@ -14,9 +14,10 @@ from .const import DOMAIN
 from .hub import AmbientikaHub
 
 PLATFORMS: list[Platform] = [
-    Platform.SENSOR,
+    Platform.BUTTON,
     Platform.BINARY_SENSOR,
     Platform.CLIMATE,
+    Platform.SENSOR,
 ]
 
 
