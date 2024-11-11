@@ -3,7 +3,7 @@
   "name": "Ambientika for Home Assistant",
   "codeowners": ["@lipkau"],
   "config_flow": true,
-  "documentation": "https://github.com/ambientika/HomeAssistant-integration-for-Ambientika",
+  "documentation": "https://github.com/ambientika/HomeAssistant-integration-for-Ambientika/blob/main/README.md",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ambientika/HomeAssistant-integration-for-Ambientika/issues",
   "requirements": ["ambientika_py==0.0.4", "returns==0.23.0"],
