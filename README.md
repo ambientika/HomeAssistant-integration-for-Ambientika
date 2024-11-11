@@ -8,15 +8,15 @@
 | `sensor`        | Show info from blueprint API.       |
 | `switch`        | Switch something `True` or `False`. | -->
 
-## Installation
+## How to Install
 
-1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
-1. If you do not have a `custom_components` directory (folder) there, you need to create it.
-1. In the `custom_components` directory (folder) create a new folder called `integration_ambientika`.
-1. Download _all_ the files from the `custom_components/integration_ambientika/` directory (folder) in this repository.
-1. Place the files you downloaded in the new directory (folder) you created.
-1. Restart Home Assistant
-1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Ambientika"
+[![Open your Home Assistant instance and open the repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg?style=flat-square)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ambientika&repository=HomeAssistant-integration-for-Ambientika&category=integration)
+
+Copy the custom_components/ambientika directory of this repository as config/custom_components/ambientika in your Home Assistant instalation.
+
+Restart Home Assistant
+
+Add the „Ambientika for Home Assistant“ integration via HA Settings > 'Devices and Services' > 'Integrations'
 
 ## Configuration is done in the UI
 
