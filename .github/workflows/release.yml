@@ -19,10 +19,10 @@ jobs:
       - name: "ZIP the integration directory"
         shell: "bash"
         run: |
-          cd "${{ github.workspace }}/custom_components/integration_ambientika"
-          zip integration_ambientika.zip -r ./
+          cd "${{ github.workspace }}/custom_components/ambientika"
+          zip ambientika.zip -r ./
 
       - name: "Upload the ZIP file to the release"
         uses: "softprops/action-gh-release@v2"
         with:
-          files: ${{ github.workspace }}/custom_components/integration_ambientika/integration_ambientika.zip
+          files: ${{ github.workspace }}/custom_components/ambientika/ambientika.zip

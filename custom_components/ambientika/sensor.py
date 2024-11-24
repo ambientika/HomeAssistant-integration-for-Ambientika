@@ -1,4 +1,4 @@
-"""Sensor platform for integration_ambientika.
+"""Sensor platform for ambientika.
 
 References:
  - https://github.com/ludeeus/integration_blueprint/blob/main/custom_components/integration_blueprint/sensor.py

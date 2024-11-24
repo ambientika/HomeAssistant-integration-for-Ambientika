@@ -1,4 +1,4 @@
-"""Binary sensor platform for integration_ambientika."""
+"""Binary sensor platform for ambientika."""
 
 from __future__ import annotations
 
