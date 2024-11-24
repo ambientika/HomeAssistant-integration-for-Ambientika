@@ -3,13 +3,12 @@
 from enum import StrEnum
 from logging import Logger, getLogger
 
-from ambientika_py import FanSpeed, HumidityLevel
 
 LOGGER: Logger = getLogger(__package__)
 
 NAME = "Ambientika"
 DOMAIN = "ambientika"
-VERSION = "0.0.1"
+VERSION = "1.0.0"
 
 DEFAULT_HOST = "https://app.ambientika.eu:4521"  # This is the default from ambientika_py. I am not aware of other values yet.
 
