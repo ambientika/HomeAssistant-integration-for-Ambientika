@@ -1,7 +1,7 @@
 {
   "domain": "ambientika",
   "name": "Ambientika for Home Assistant",
-  "codeowners": ["@lipkau"],
+  "codeowners": ["@ambientika"],
   "config_flow": true,
   "documentation": "https://github.com/ambientika/HomeAssistant-integration-for-Ambientika/blob/main/README.md",
   "iot_class": "cloud_polling",

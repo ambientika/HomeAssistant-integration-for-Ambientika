@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "description": "Wenn du Hilfe bei der Konfiguration benötigst schaue auf: https://github.com/lipkau/HomeAssistant-integration-for-Ambientika",
+        "description": "Wenn du Hilfe bei der Konfiguration benötigst schaue auf: https://github.com/ambientika/HomeAssistant-integration-for-Ambientika",
         "data": {
           "username": "Benutzername",
           "password": "Passwort"

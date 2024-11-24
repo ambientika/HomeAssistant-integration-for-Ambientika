@@ -1,7 +1,7 @@
 """Custom integration for Ambientika devices with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/lipkau/HomeAssistant-integration-for-Ambientika
+https://github.com/ambientika/HomeAssistant-integration-for-Ambientika
 """
 
 from __future__ import annotations
