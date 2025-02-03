@@ -2,7 +2,7 @@ colorlog==6.9.0
 homeassistant==2024.5.2
 
 pip>=24.1.2,<24.4
-ruff==0.8.3
+ruff==0.9.4
 
 ambientika_py==0.0.4
 returns==0.24.0
