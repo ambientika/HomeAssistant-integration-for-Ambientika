@@ -24,3 +24,6 @@ jobs:
 
       - name: "Lint"
         run: scripts/lint
+
+      - name: "Unit tests"
+        run: python3 -m unittest discover -s tests

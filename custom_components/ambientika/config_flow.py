@@ -77,6 +77,9 @@ class AmbientikaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 }
             ),
             errors=errors,
+            description_placeholders={
+                "documentation_url": "https://github.com/ambientika/HomeAssistant-integration-for-Ambientika"
+            },
         )
 
 

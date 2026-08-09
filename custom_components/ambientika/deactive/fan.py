@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ambientika_py import Device, DeviceStatus, FanSpeed, OperatingMode
+from ambientika_py import Device, FanSpeed, OperatingMode
 
 from homeassistant.components.fan import FanEntity, FanEntityFeature
 from homeassistant.config_entries import ConfigEntry
@@ -18,6 +18,7 @@ from homeassistant.util.percentage import (
 from returns.result import Failure, Success
 
 from ..const import DOMAIN, LOGGER, ORDERED_NAMED_FAN_SPEEDS
+from ..entity import AmbientikaCoordinatorEntity
 from ..hub import AmbientikaHub
 
 
@@ -30,10 +31,10 @@ async def async_setup_entry(
     hub: AmbientikaHub = _hass.data[DOMAIN][entry.entry_id]
 
     # TODO: should we not mount the slave devices?
-    async_add_entities((AmbientikaFan(device) for device in hub.devices), True)
+    async_add_entities(AmbientikaFan(hub, device) for device in hub.devices)
 
 
-class AmbientikaFan(FanEntity):
+class AmbientikaFan(AmbientikaCoordinatorEntity, FanEntity):
     """Representation of an Ambientika device."""
 
     # TODO:
@@ -44,10 +45,9 @@ class AmbientikaFan(FanEntity):
     # _attr_icon = "mdi:air-purifier"
     _attr_device_class = "fan"
 
-    def __init__(self, device: Device):
+    def __init__(self, coordinator: AmbientikaHub, device: Device) -> None:
         """Initialize the fan."""
-        self._device = device
-        self._status: DeviceStatus | None = None
+        super().__init__(coordinator, device)
 
         self._attr_unique_id = f"{self._device.name}_fan"
         self._attr_name = self._device.name
@@ -124,29 +124,43 @@ class AmbientikaFan(FanEntity):
                     target_mode = self._status["last_operating_mode"]
                 else:
                     target_mode = OperatingMode.Auto
-            if await self._device.change_mode(
+            result = await self._device.change_mode(
                 {
                     "operating_mode": target_mode,
                     "fan_speed": target_speed,
                     "humidity_level": self._status["humidity_level"],
                 }
-            ):
-                self._status["last_operating_mode"] = self._status["operating_mode"]
-                self._status["operating_mode"] = target_mode
+            )
+            match result:
+                case Success(_):
+                    await self.coordinator.async_request_refresh()
+                case Failure(error):
+                    LOGGER.error(
+                        "Writing to device %s failed: %s",
+                        self._device.serial_number,
+                        error,
+                    )
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the fan off."""
         target_mode = OperatingMode.Off
         if self._status:
-            if await self._device.change_mode(
+            result = await self._device.change_mode(
                 {
                     "operating_mode": target_mode,
                     "fan_speed": self._status["fan_speed"],
                     "humidity_level": self._status["humidity_level"],
                 }
-            ):
-                self._status["last_operating_mode"] = self._status["operating_mode"]
-                self._status["operating_mode"] = target_mode
+            )
+            match result:
+                case Success(_):
+                    await self.coordinator.async_request_refresh()
+                case Failure(error):
+                    LOGGER.error(
+                        "Writing to device %s failed: %s",
+                        self._device.serial_number,
+                        error,
+                    )
 
     async def async_toggle(self, **kwargs: Any) -> None:
         """Toggle the fan."""
@@ -162,18 +176,3 @@ class AmbientikaFan(FanEntity):
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set the preset mode of the fan."""
         await self.async_turn_on(preset_mode=preset_mode)
-
-    async def async_update(self) -> None:
-        """Fetch new state data for this device."""
-        LOGGER.debug("Updating fan entity for device %s", self._device.serial_number)
-        status = await self._device.status()
-        match status:
-            case Success(data):
-                self._status = data
-            case Failure(error):
-                LOGGER.error(
-                    "Could not fetch status for device %s. %s",
-                    self._device.serial_number,
-                    error,
-                )
-                self._status = None
