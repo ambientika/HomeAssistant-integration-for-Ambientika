@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from ambientika_py import Device, DeviceStatus, FanSpeed, HumidityLevel, OperatingMode
+from ambientika_py import Device, FanSpeed, HumidityLevel, OperatingMode
 
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
@@ -30,6 +30,7 @@ from .const import (
     # ORDERED_NAMED_FAN_SPEEDS,
     # ORDERED_NAMED_HUMIDITY_LEVELS,
 )
+from .entity import AmbientikaCoordinatorEntity
 from .hub import AmbientikaHub
 
 FAN_SPEED_AMBIENTIKA_TO_HVAC = {
@@ -57,10 +58,10 @@ async def async_setup_entry(
     hub: AmbientikaHub = _hass.data[DOMAIN][entry.entry_id]
 
     # TODO: should we not mount the slave devices?
-    async_add_entities((AmbientikaClimate(device) for device in hub.devices), True)
+    async_add_entities(AmbientikaClimate(hub, device) for device in hub.devices)
 
 
-class AmbientikaClimate(ClimateEntity):
+class AmbientikaClimate(AmbientikaCoordinatorEntity, ClimateEntity):
     """Representation of an Ambientika device."""
 
     # TODO:
@@ -74,10 +75,9 @@ class AmbientikaClimate(ClimateEntity):
     # _attr_icon = "mdi:air-conditioner"
     # _attr_device_class = "climate"
 
-    def __init__(self, device: Device) -> None:
+    def __init__(self, coordinator: AmbientikaHub, device: Device) -> None:
         """Initialize an Ambientika device."""
-        self._device = device
-        self._status: DeviceStatus | None = None
+        super().__init__(coordinator, device)
 
     @property
     def unique_id(self) -> str:
@@ -95,11 +95,6 @@ class AmbientikaClimate(ClimateEntity):
             "model": "Ambientika",
             "serial_number": self._device.serial_number,
         }
-
-    @property
-    def available(self) -> bool:
-        """Returns wether the device is currently available."""
-        return self._status is not None
 
     @property
     def name(self) -> str:
@@ -307,40 +302,10 @@ class AmbientikaClimate(ClimateEntity):
                 LOGGER.debug(
                     "Writing to device %s: success", self._device.serial_number
                 )
-                self._status["last_operating_mode"] = self._status["operating_mode"]
-                self._status["operating_mode"] = target_mode
+                await self.coordinator.async_request_refresh()
             case Failure(error):
                 LOGGER.error(
                     "Writing to device %s: failed. %s",
                     self._device.serial_number,
                     error,
                 )
-
-    async def async_update(self) -> None:
-        """Fetch new state data for this device."""
-        LOGGER.debug(
-            "[%s] Updating device %s.",
-            "climate",
-            self._device.serial_number,
-        )
-        status = await self._device.status()
-        match status:
-            case Success(data):
-                LOGGER.debug(
-                    "[%s] Updating device %s: operating_mode=%s humidity=%s fan_speed=%s humidity_level=%s",
-                    "climate",
-                    self._device.serial_number,
-                    data["operating_mode"],
-                    data["humidity"],
-                    data["fan_speed"],
-                    data["humidity_level"],
-                )
-                self._status = data
-            case Failure(error):
-                LOGGER.error(
-                    "[%s] Updating device %s: failed. %s",
-                    "climate",
-                    self._device.serial_number,
-                    error,
-                )
-                self._status = None

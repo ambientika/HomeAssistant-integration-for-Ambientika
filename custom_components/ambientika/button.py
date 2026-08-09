@@ -31,7 +31,7 @@ async def async_setup_entry(
     hub: AmbientikaHub = hass.data[DOMAIN][entry.entry_id]
 
     # TODO: should we not mount the slave devices?
-    async_add_entities((FilterResetButton(device, hub) for device in hub.devices), True)
+    async_add_entities(FilterResetButton(device, hub) for device in hub.devices)
 
 
 class FilterResetButton(ButtonEntity):
