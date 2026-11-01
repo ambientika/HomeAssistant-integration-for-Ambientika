@@ -24,6 +24,11 @@
         "name": "Humidity Alarm"
       }
     },
+    "button": {
+      "filter_reset": {
+        "name": "Reset Filter"
+      }
+    },
     "sensor": {
       "air_quality": {
         "name": "Air Quality",

@@ -24,6 +24,11 @@
         "name": "Luftfeuchte Alarm"
       }
     },
+    "button": {
+      "filter_reset": {
+        "name": "Filter zurücksetzen"
+      }
+    },
     "sensor": {
       "air_quality": {
         "name": "Luftqualität",
