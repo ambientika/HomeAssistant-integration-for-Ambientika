@@ -139,9 +139,12 @@ class AmbientikaClimate(ClimateEntity):
         return FAN_SPEED_AMBIENTIKA_TO_HVAC.get(self._status["fan_speed"])
 
     @property
-    def temperature_unit(self) -> str:
+    def native_temperature_unit(self) -> str:
         """Return the temperature unit."""
         return UnitOfTemperature.CELSIUS
+
+    # Home Assistant < 2026.11 has no native_* climate properties.
+    temperature_unit = native_temperature_unit
 
     @property
     def preset_modes(self) -> list[str] | None:
@@ -173,12 +176,15 @@ class AmbientikaClimate(ClimateEntity):
         return HUMIDITY_LEVEL_TO_INT[self._status["humidity_level"]]
 
     @property
-    def current_temperature(self) -> float | None:
+    def native_current_temperature(self) -> float | None:
         """Return the current temperature."""
         if not self._status:
             return
 
         return self._status["temperature"]
+
+    # Home Assistant < 2026.11 has no native_* climate properties.
+    current_temperature = native_current_temperature
 
     @property
     def hvac_modes(self) -> list[HVACMode]:
