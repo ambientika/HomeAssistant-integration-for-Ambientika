@@ -18,7 +18,11 @@
   "entity": {
     "binary_sensor": {
       "night_alarm": {
-        "name": "Allarme notturno"
+        "name": "Sensore crepuscolare",
+        "state": {
+          "on": "Notte",
+          "off": "Giorno"
+        }
       },
       "humidity_alarm": {
         "name": "Allarme umidità"

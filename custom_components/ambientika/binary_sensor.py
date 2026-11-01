@@ -89,11 +89,15 @@ class HumidityAlarmBinarySensor(BinarySensorBase):
 
 
 class NightAlarmBinarySensor(BinarySensorBase):
-    """Humidity Alarm Binary Sensor."""
+    """Twilight sensor: on when the device detects night."""
 
     _attr_has_entity_name = True
     _attr_translation_key = "night_alarm"
-    _attr_icon = "mdi:alarm-light"
+
+    @property
+    def icon(self) -> str:
+        """Return a moon at night and a sun during the day."""
+        return "mdi:weather-night" if self.is_on else "mdi:weather-sunny"
 
     def __init__(self, device) -> None:
         """Initialize the sensor."""
