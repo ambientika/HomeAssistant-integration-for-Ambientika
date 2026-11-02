@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from ambientika_py import Device, DeviceStatus, FanSpeed, HumidityLevel, OperatingMode
 
 from homeassistant.components.climate import ClimateEntity
@@ -46,6 +48,14 @@ HUMIDITY_LEVEL_TO_INT = {
     HumidityLevel.Moist: 3,
 }
 HUMIDITY_INT_TO_LEVEL = {value: key for key, value in HUMIDITY_LEVEL_TO_INT.items()}
+# Presets use snake_case keys (e.g. "manual_heat_recovery") so they can be translated.
+PRESET_TO_OPERATING_MODE_NAME = {
+    re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower(): name
+    for name in OperatingMode.__members__
+}
+OPERATING_MODE_NAME_TO_PRESET = {
+    value: key for key, value in PRESET_TO_OPERATING_MODE_NAME.items()
+}
 
 
 async def async_setup_entry(
@@ -146,7 +156,7 @@ class AmbientikaClimate(ClimateEntity):
     @property
     def preset_modes(self) -> list[str] | None:
         """Returns the list of available operating modes."""
-        return [name for name, _ in OperatingMode.__members__.items()]
+        return list(PRESET_TO_OPERATING_MODE_NAME)
 
     @property
     def preset_mode(self) -> str | None:
@@ -154,7 +164,7 @@ class AmbientikaClimate(ClimateEntity):
         if not self._status:
             return
 
-        return self._status["operating_mode"].name
+        return OPERATING_MODE_NAME_TO_PRESET[self._status["operating_mode"].name]
 
     @property
     def current_humidity(self) -> int | None:
@@ -222,7 +232,9 @@ class AmbientikaClimate(ClimateEntity):
         if not self._status:
             return
 
-        await self.async_set_device(operation_mode=preset_mode)
+        await self.async_set_device(
+            operation_mode=PRESET_TO_OPERATING_MODE_NAME[preset_mode]
+        )
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set the fan mode."""

@@ -24,6 +24,28 @@
         "name": "Humidity Alarm"
       }
     },
+    "climate": {
+      "climate": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "smart": "Smart",
+              "auto": "Auto",
+              "manual_heat_recovery": "Manual Heat Recovery",
+              "night": "Night",
+              "away_home": "Away From Home",
+              "surveillance": "Surveillance",
+              "timed_expulsion": "Timed Expulsion",
+              "expulsion": "Expulsion",
+              "intake": "Intake",
+              "master_slave_flow": "Master → Slave Flow",
+              "slave_master_flow": "Slave → Master Flow",
+              "off": "Off"
+            }
+          }
+        }
+      }
+    },
     "sensor": {
       "air_quality": {
         "name": "Air Quality",
