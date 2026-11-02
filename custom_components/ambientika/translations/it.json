@@ -1,0 +1,86 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Se hai bisogno di aiuto con la configurazione, consulta: https://github.com/ambientika/HomeAssistant-integration-for-Ambientika",
+        "data": {
+          "username": "Nome utente",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "auth": "Nome utente o password errati.",
+      "connection": "Impossibile connettersi al server.",
+      "unknown": "Si è verificato un errore sconosciuto."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "night_alarm": {
+        "name": "Sensore crepuscolare",
+        "state": {
+          "on": "Notte",
+          "off": "Giorno"
+        }
+      },
+      "humidity_alarm": {
+        "name": "Allarme umidità"
+      }
+    },
+    "button": {
+      "filter_reset": {
+        "name": "Reset filtro"
+      }
+    },
+    "climate": {
+      "climate": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "smart": "Smart",
+              "auto": "Auto",
+              "manual_heat_recovery": "Recupero di calore manuale",
+              "night": "Notte",
+              "away_home": "Fuori casa",
+              "surveillance": "Sorveglianza",
+              "timed_expulsion": "Espulsione temporizzata",
+              "expulsion": "Espulsione",
+              "intake": "Immissione",
+              "master_slave_flow": "Flusso master → slave",
+              "slave_master_flow": "Flusso slave → master",
+              "off": "Spento"
+            }
+          },
+          "fan_mode": {
+            "state": {
+              "low": "Bassa",
+              "medium": "Media",
+              "high": "Alta"
+            }
+          }
+        }
+      }
+    },
+    "sensor": {
+      "air_quality": {
+        "name": "Qualità dell'aria",
+        "state": {
+          "very_good": "Molto buona",
+          "good": "Buona",
+          "medium": "Media",
+          "poor": "Scarsa",
+          "bad": "Cattiva"
+        }
+      },
+      "filter_status": {
+        "name": "Stato filtro",
+        "state": {
+          "bad": "Cattivo",
+          "medium": "Medio",
+          "good": "Buono"
+        }
+      }
+    }
+  }
+}

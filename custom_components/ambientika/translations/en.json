@@ -18,10 +18,19 @@
   "entity": {
     "binary_sensor": {
       "night_alarm": {
-        "name": "Night Alarm"
+        "name": "Twilight Sensor",
+        "state": {
+          "on": "Night",
+          "off": "Day"
+        }
       },
       "humidity_alarm": {
         "name": "Humidity Alarm"
+      }
+    },
+    "button": {
+      "filter_reset": {
+        "name": "Reset Filter"
       }
     },
     "sensor": {

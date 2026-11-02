@@ -18,10 +18,19 @@
   "entity": {
     "binary_sensor": {
       "night_alarm": {
-        "name": "Nacht Alarm"
+        "name": "Dämmerungssensor",
+        "state": {
+          "on": "Nacht",
+          "off": "Tag"
+        }
       },
       "humidity_alarm": {
         "name": "Luftfeuchte Alarm"
+      }
+    },
+    "button": {
+      "filter_reset": {
+        "name": "Filter zurücksetzen"
       }
     },
     "sensor": {
