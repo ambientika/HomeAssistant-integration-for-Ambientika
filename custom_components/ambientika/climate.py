@@ -8,7 +8,6 @@ from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
     ClimateEntityFeature,
     HVACMode,
-    HVACAction,
     FAN_LOW,
     FAN_MEDIUM,
     FAN_HIGH,
@@ -195,17 +194,6 @@ class AmbientikaClimate(ClimateEntity):
             return HVACMode.OFF
         else:
             return HVACMode.FAN_ONLY
-
-    @property
-    def hvac_action(self) -> str | None:
-        """Return the current HVAC action."""
-        if not self._status:
-            return
-
-        if self._status["operating_mode"] == OperatingMode.Off:
-            return HVACAction.OFF
-        else:
-            return HVACAction.FAN
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode):
         """Set the new HVAC Mode."""
