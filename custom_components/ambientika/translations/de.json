@@ -24,6 +24,28 @@
         "name": "Luftfeuchte Alarm"
       }
     },
+    "climate": {
+      "climate": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "smart": "Smart",
+              "auto": "Auto",
+              "manual_heat_recovery": "Manuelle Wärmerückgewinnung",
+              "night": "Nacht",
+              "away_home": "Abwesend",
+              "surveillance": "Überwachung",
+              "timed_expulsion": "Zeitgesteuerte Abluft",
+              "expulsion": "Abluft",
+              "intake": "Zuluft",
+              "master_slave_flow": "Strömung Master → Slave",
+              "slave_master_flow": "Strömung Slave → Master",
+              "off": "Aus"
+            }
+          }
+        }
+      }
+    },
     "sensor": {
       "air_quality": {
         "name": "Luftqualität",
