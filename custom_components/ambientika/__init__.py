@@ -6,6 +6,13 @@ https://github.com/ambientika/HomeAssistant-integration-for-Ambientika
 
 from __future__ import annotations
 
+import ambientika_py
+
+from .compat import ensure_night_fan_speed
+
+# Must run before the platforms import FanSpeed (see compat.py).
+ensure_night_fan_speed(ambientika_py)
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
