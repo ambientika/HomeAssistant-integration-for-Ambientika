@@ -128,7 +128,9 @@ class AmbientikaClimate(ClimateEntity):
     @property
     def fan_modes(self) -> list[str] | None:
         """Return the list of available fan modes."""
-        return [FAN_SPEED_AMBIENTIKA_TO_HVAC[fan_speed] for fan_speed in FanSpeed]
+        # Only the user-selectable speeds. FanSpeed.Night is set by the device's Night
+        # mode and has no HVAC fan mode, so iterating FanSpeed would raise KeyError.
+        return list(FAN_SPEED_AMBIENTIKA_TO_HVAC.values())
 
     @property
     def fan_mode(self) -> str | None:
